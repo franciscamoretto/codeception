@@ -1,0 +1,1 @@
+{"message":"The given data was invalid.","errors":{"name":["The name may only contain letters, numbers, dashes and underscores."],"email":["The email must be a valid email address."]}}
