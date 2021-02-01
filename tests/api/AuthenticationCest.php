@@ -11,10 +11,7 @@ class AuthenticationCest
     {
         $I->sendPost('/api/v1/auth/register', ['name' => 'Ada', 'email' => 'ada@test.com', 'password' => 'Qwer1234', 'password_confirmation' => 'Qwer1234']);
         $I->seeResponseCodeIs(201);
-        // $I->seeResponseCodeIs(HttpCode::Created); // 201
         $I->seeResponseIsJson();
-        // $myname = $I->grabDataFromResponseByJsonPath('$.name');
-        // $I->assertEquals($myname[0], 'Luke Skywalker');
         $I->seeResponseMatchesJsonType([
             'access_token' => 'string',
             'token_type' => 'string',
@@ -24,7 +21,6 @@ class AuthenticationCest
         $I->seeResponseContainsJson([
                 'token_type' => 'bearer',
                 'expires_in' => '3600',
-                // 'user_id' => 
         ]);
     }
 
@@ -32,10 +28,7 @@ class AuthenticationCest
     { 
         $I->sendPost('/api/v1/auth/register', ['name' => '', 'email' => '', 'password' => '', 'password_confirmation' => '']);
         $I->seeResponseCodeIs(422);
-        // $I->seeResponseCodeIs(HttpCode::Created); // 201
         $I->seeResponseIsJson();
-        // $myname = $I->grabDataFromResponseByJsonPath('$.name');
-        // $I->assertEquals($myname[0], 'Luke Skywalker');
         $I->seeResponseMatchesJsonType([
             'message' => 'string',
             'errors' => [
@@ -58,7 +51,6 @@ class AuthenticationCest
     { 
         $I->sendPost('/api/v1/auth/register', ['name' => 'Maria', 'email' => 'maria@test.com', 'password' => 'Qwer1234', 'password_confirmation' => 'Qwer1234']);
         $I->seeResponseCodeIs(409);
-        // $I->seeResponseCodeIs(HttpCode::Created); // 201
         $I->seeResponseIsJson();
         $I->seeResponseMatchesJsonType([
             'message' => 'string',
@@ -87,7 +79,7 @@ class AuthenticationCest
         ]);
     }
 
-    public function registerUserWithInavlidaEmail(ApiTester $I)
+    public function registerUserWithInavlidEmail(ApiTester $I)
     { 
         $I->sendPost('/api/v1/auth/register', ['name' => 'Ada', 'email' => 'ada lovelace@test.com', 'password' => 'Qwer1234', 'password_confirmation' => 'Qwer1234']);
         $I->seeResponseCodeIs(422);
