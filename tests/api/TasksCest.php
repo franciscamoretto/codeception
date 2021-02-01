@@ -3,14 +3,12 @@
 class TasksCest
 {
     public $token;
+    public $taskId;
 
     public function _before(ApiTester $I)
     {
         $I->sendPost('/api/v1/auth/login', ['email' => 'ada@test.com', 'password' => 'Qwer1234']);
         $this->token = $I->grabDataFromResponseByJsonPath('$.access_token');
-        // $I->sendPost('/api/v1/auth/login', ['email' => 'ada@test.com', 'password' => 'Qwer1234']);
-        // $token = $I->grabDataFromResponseByJsonPath('$.access_token');
-        // print_r($token);
         $I->haveHttpHeader('Authorization', 'Bearer '. $this->token[0] );
     }
 
@@ -19,44 +17,66 @@ class TasksCest
     { 
         $I->sendPost('/api/v1/tasks', ['title' => 'A newly created task']);
         $I->seeResponseCodeIs(201);
-        // $I->seeResponseCodeIs(HttpCode::Created); // 201
         $I->seeResponseIsJson();
+        $I->seeResponseMatchesJsonType([
+            'data' => [
+                'id' => 'integer',
+                'title' => 'string',
+                'is_completed' => 'boolean',
+                'author' => [
+                'id' => 'integer',
+                'name' => 'string',
+                'email' => 'string',
+              ],
+        ]]);
 
-        // $I->assertEquals($myname[0], 'Luke Skywalker');
-        // $I->seeResponseMatchesJsonType([
-        //     'access_token' => 'string',
-        //     'token_type' => 'string',
-        //     'expires_in' => 'integer',
-        //     'user_id' => 'integer',
-        // ]);
-        // $I->seeResponseContainsJson([
-        //         'token_type' => 'bearer',
-        //         'expires_in' => '3600',
-        //         // 'user_id' => 
-        // ]);
+        $I->seeResponseContainsJson([
+            'data' => [
+                'title' => 'A newly created task',
+                'author' => [
+                    'name' => 'Ada',
+                    'email' => 'ada@test.com',
+                ],
+        ]]);
+        $this->taskId = $I->grabDataFromResponseByJsonPath('$.data.id');
     }
 
-    public function createNewTaskWithExpiredSession(ApiTester $I)
+     public function verifyAllTasks(ApiTester $I)
     { 
+        $I->sendGet('/api/v1/tasks');
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+        $tasks = $I->grabDataFromResponseByJsonPath('$.data');
+        // print_r($tasks);
+        $I->assertEquals(count($tasks),1);
     }
 
     public function updateTask(ApiTester $I)
-    { 
-    }
+    {
+        $I->sendPut('/api/v1/tasks/' . $this->taskId[0], ['title' => 'This is an updated task']);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+        $I->seeResponseMatchesJsonType([
+            'data' => [
+                'id' => 'integer',
+                'title' => 'string',
+                'is_completed' => 'boolean',
+                'author' => [
+                'id' => 'integer',
+                'name' => 'string',
+                'email' => 'string',
+              ],
+        ]]);
 
-    public function updateNonExistentTask(ApiTester $I)
-    { 
-    }
-
-    public function updateTaskInvalidInformation(ApiTester $I)
-    { 
+        $I->seeResponseContainsJson([
+            'data' => [
+                'title' => 'This is an updated task',
+        ]]);
     }
 
     public function deleteTask(ApiTester $I)
     { 
-    }
-
-    public function deleteNonExistentTask(ApiTester $I)
-    { 
+        $I->sendDelete('/api/v1/tasks/' . $this->taskId[0]);
+        $I->seeResponseCodeIs(204);
     }
 }
