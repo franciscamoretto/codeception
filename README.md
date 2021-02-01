@@ -31,3 +31,10 @@ php vendor/bin/list-tests tests/
   - ✔️  [Verify all tasks](git@github.com:xsery/codeception.git/api/TasksCest.php#L44) 
   - ✔️  [Update task](git@github.com:xsery/codeception.git/api/TasksCest.php#L54) 
   - ✔️  [Delete task](git@github.com:xsery/codeception.git/api/TasksCest.php#L77) 
+
+# Test Run
+[Test Run](https://app.testomat.io/projects/luna-ae954/runs/2bfa682d/report)
+
+# Reports
+[Report](https://app.testomat.io/projects/luna-ae954/runs/2bfa682d/report)
+
