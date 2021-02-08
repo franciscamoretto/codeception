@@ -40,3 +40,26 @@ php vendor/bin/list-tests tests/
 
 # Docker Image
 [fception](https://hub.docker.com/r/xsery/fception)
+
+# Enable Test Run Report
+Open a project with tests.
+Install the npm package "composer require testomatio/reporter --dev"
+```
+composer require testomatio/reporter --dev
+```
+OR
+```
+codecept testomatio/reporter --dev
+```
+Run the following command from your project folder: 
+```
+codecept testomatio/reporter --dev
+```
+TESTOMATIO=<API Key> php vendor/bin/codecept run --ext "Testomatio\Reporter\Codeception"
+```
+ OR
+ ```
+TESTOMATIO=<API Key> codecept run --ext "Testomatio\Reporter\Codeception"
+``` 
+
+
