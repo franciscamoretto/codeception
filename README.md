@@ -54,8 +54,7 @@ codecept testomatio/reporter --dev
 ```
 
 Run the following command from your project folder: 
-```
-codecept testomatio/reporter --dev
+
 ```
 TESTOMATIO=<API Key> php vendor/bin/codecept run --ext "Testomatio\Reporter\Codeception"
 ```
