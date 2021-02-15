@@ -63,3 +63,8 @@ OR
 ```
 TESTOMATIO=<API Key> codecept run --ext "Testomatio\Reporter\Codeception"
 ``` 
+
+To easily run the tests with the reporter (just download the repo and the fcpetion image):
+```
+docker run -e TESTOMATIO=<APIKey> --net=host -v $(pwd):/project -it fception run --ext "Testomatio\Reporter\Codeception"
+``` 
