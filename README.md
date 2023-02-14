@@ -1,4 +1,5 @@
-This was a really cool coding challenge that introduced me to the testing framework in PHP called codeception and the tool for managing tests Testomat https://app.testomat.io/
+This was a really cool coding challenge that introduced me to the testing framework in PHP called codeception and the tool for managing tests [Testomat](https://app.testomat.io/)
+
 
 # Dependencies
 [Codeception](https://hub.docker.com/r/codeception/codeception)
